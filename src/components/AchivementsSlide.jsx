@@ -386,7 +386,7 @@ const AchievementsSlide = () => {
               System Transformation Overview
             </div>
           </div>
-          <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#fe8e68] to-[#ff6b6b] mb-4">
+          <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#fe8e68] to-[#ff6b6b] mb-4 p-5">
             StoragePal Transformation
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
