@@ -1,180 +1,127 @@
-import React, { useState, useEffect } from 'react';
-import { Box, MapPin, Calendar, Server, Search, ChevronDown, ChevronUp, Layout } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import AchievementsSlide from './components/AchivementsSlide';
+import IntroSlide from './components/IntroSlide';
+import { Phase1Slide, Phase2Slide, Phase3Slide, Phase4Slide } from './components/RoadmapSlides';
 
-const Card = ({ icon: Icon, title, shortDescription, longDescription, features, api, eta, color, location }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [showLongDesc, setShowLongDesc] = useState(false);
+const PresentationContainer = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [transitioning, setTransitioning] = useState(false);
 
-  return (
-    <div
-      className="bg-slate-900/50 backdrop-blur rounded-xl p-6 border border-slate-800 hover:border-[#fe8e68] transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#fe8e68]/10"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-slate-800/50 rounded-lg">
-            <Icon className={`w-5 h-5 text-[#fe8e68] transition-transform duration-300 ${isHovered ? 'scale-110 rotate-12' : ''}`} />
-          </div>
-          <h2 className="text-lg font-semibold text-white">{title}</h2>
-        </div>
-        <span className="bg-slate-800/50 text-[#fe8e68] px-3 py-1 rounded-full text-sm font-medium">
-          {eta}d
-        </span>
-      </div>
-
-      <div className="flex items-center gap-2 mb-3">
-        <Layout className="w-4 h-4 text-slate-400" />
-        <span className="text-sm text-slate-400">{location}</span>
-      </div>
-
-      <div className="space-y-3">
-        <p className="text-slate-300 text-sm leading-relaxed">
-          {showLongDesc ? longDescription : shortDescription}
-        </p>
-        <button
-          onClick={() => setShowLongDesc(!showLongDesc)}
-          className="text-[#fe8e68] flex items-center gap-1 text-sm hover:opacity-80 transition-opacity"
-        >
-          {showLongDesc ? (
-            <>Show less <ChevronUp className="w-4 h-4" /></>
-          ) : (
-            <>Learn more <ChevronDown className="w-4 h-4" /></>
-          )}
-        </button>
-      </div>
-
-      <div className="mt-4 bg-slate-800/50 rounded-lg p-4 space-y-2">
-        {features.map((feature, index) => (
-          <p key={index} className="text-slate-300 text-sm">{feature}</p>
-        ))}
-        <div className="pt-3 mt-3 border-t border-slate-700/50">
-          <p className="text-slate-400 text-sm">API: {api}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const AIStorageDashboard = () => {
-  const [animate, setAnimate] = useState(false);
-
-  const calculateTotalETA = (cards) => {
-    return cards.reduce((sum, card) => sum + card.eta, 0);
-  };
-  
-
-  useEffect(() => {
-    setAnimate(true);
-  }, []);
-
-  const cards = [
-    {
-      icon: Search,
-      title: "Smart Search Enhancement",
-      shortDescription: "Will increase conversion rates with intuitive search",
-      longDescription: "This AI-powered system will boost sales by 25-30% through intelligent search that understands customer intent. It will interpret complex queries like 'my winter camping gear' or 'holiday decorations', automatically suggesting appropriate storage solutions. The technology will analyze past purchase patterns, seasonal trends, and storage requirements to provide highly relevant recommendations. Expected benefits include reduced cart abandonment (15% improvement), increased average order value (20% uplift), and significantly improved customer satisfaction scores. Implementation will require minimal backend integration and can be deployed within existing search infrastructure.",
-      features: [
-        "Projected ROI: 25-30% conversion rate increase",
-        "Expected 15% reduction in cart abandonment"
-      ],
-      api: "OpenAI GPT-4",
-      eta: 10,
-      color: "orange",
-      location: "Catalog - Main search bar"
-    },
-    {
-      icon: Server,
-      title: "Minimum Requirement Optimizer",
-      shortDescription: "Will increase average order value by 35%",
-      longDescription: "This system will drive revenue growth through smart cart optimization. It will analyze customer selections to suggest high-margin complementary items that fulfill our 6-item minimum requirement. Based on market analysis, it shows potential to increase average order value by 35% while maintaining high customer satisfaction. The advisor will use purchase patterns to recommend products with the highest attach rates. Implementation costs will be offset within the first month through increased sales. The system will include A/B testing capabilities to continuously optimize recommendation algorithms.",
-      features: [
-        "Projected ROI: 35% increase in average order value",
-        "Expected 1-month payback period"
-      ],
-      api: "Claude API",
-      eta: 15,
-      color: "yellow",
-      location: "Catalog - Cart summary section"
-    },
-    {
-      icon: Calendar,
-      title: "Visit Scheduler Optimization",
-      shortDescription: "Will reduce operational costs by 20%",
-      longDescription: "This system will streamline operations and reduce costs through AI-powered scheduling. It will optimize warehouse staff allocation and reduce customer wait times by analyzing historical patterns and real-time data. Analysis suggests potential for 20% reduction in operational costs through better resource allocation. Additional projected benefits include 40% reduction in peak-time congestion and 30% improvement in customer satisfaction scores. The system will integrate with existing scheduling infrastructure and include automated reporting for performance tracking.",
-      features: [
-        "Projected ROI: 20% operational cost reduction",
-        "Expected 40% decrease in warehouse congestion"
-      ],
-      api: "OpenAI GPT-4",
-      eta: 15,
-      color: "purple",
-      location: "My Space - Visit/Return scheduling"
-    },
-    {
-      icon: MapPin,
-      title: "Climate-Smart Storage Advisor",
-      shortDescription: "Will reduce damage claims by 45%",
-      longDescription: "This system will improve storage recommendations by analyzing item characteristics and environmental factors. It suggests optimal storage solutions based on item type and location data. Analysis shows potential for 45% reduction in damage claims and 25% increase in premium unit sales. The system uses a rule-based matching algorithm to pair items with appropriate storage conditions.",
-      features: [
-        "Projected ROI: 45% reduction in damage claims",
-        "Expected 25% increase in premium storage sales"
-      ],
-      api: "OpenAI GPT-4",
-      eta: 7,
-      color: "green",
-      location: "Catalog - Item recommendations"
-    },
-    {
-      icon: Box,
-      title: "Smart Bundle Recommendations",
-      shortDescription: "Will increase cross-sell revenue by 40%",
-      longDescription: "This system will maximize revenue through AI-powered product bundling and cross-selling. It will analyze purchase patterns and storage behaviors to suggest highly relevant complementary products. Analysis projects 40% increase in cross-sell revenue and 28% improvement in customer lifetime value. The engine will adapt to seasonal trends and inventory levels, ensuring recommendations align with business goals. Implementation will include performance tracking dashboard and A/B testing capabilities for continuous optimization.",
-      features: [
-        "Projected ROI: 40% increase in cross-sell revenue",
-        "Expected 28% improvement in customer lifetime value"
-      ],
-      api: "OpenAI GPT-3.5",
-      eta: 30,
-      color: "blue",
-      location: "Catalog - Related items section"
-    }
+  const slides = [
+    { component: IntroSlide, title: "Introduction" },
+    { component: AchievementsSlide, title: "Achievements" },
+    { component: Phase1Slide, title: "System Standardization" },
+    { component: Phase2Slide, title: "Catalog & Integration" },
+    { component: Phase3Slide, title: "AI Implementation" },
+    { component: Phase4Slide, title: "V2 Planning" },
   ];
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900 text-slate-200 p-8">
-    <div className="max-w-7xl mx-auto">
-      <header className={`mb-16 text-center transform transition-all duration-1000 ${animate ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
-        <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#fe8e68] to-[#ff6b6b]">
-          AI Revenue Optimization
-        </h1>
-        <p className="text-slate-400 mt-4 text-lg">Projected {calculateTotalETA(cards)}-Day ROI: 300%</p>
-      </header>
+  const handleSlideChange = (direction) => {
+    if (transitioning) return;
+    
+    setTransitioning(true);
+    const newSlide = direction === 'next' 
+      ? (currentSlide + 1) % slides.length 
+      : (currentSlide - 1 + slides.length) % slides.length;
+    
+    setTimeout(() => {
+      setCurrentSlide(newSlide);
+      setTransitioning(false);
+    }, 500);
+  };
 
-      <div className="grid lg:grid-cols-3 gap-6">
-        {cards.map((card, index) => (
-          <div
-            key={index}
-            className={`transform transition-all duration-700 hover:z-10 ${
-              animate ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            }`}
-            style={{ transitionDelay: `${index * 100}ms` }}
-          >
-            <Card {...card} />
+  const handleKeyPress = (e) => {
+    if (e.key === 'ArrowRight') handleSlideChange('next');
+    if (e.key === 'ArrowLeft') handleSlideChange('prev');
+  };
+
+  const CurrentSlideComponent = slides[currentSlide].component;
+
+  return (
+    <div 
+      className="flex flex-col h-screen bg-slate-900 text-white relative"
+      tabIndex={0}
+      onKeyDown={handleKeyPress}
+    >
+      {/* Header */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <div className="bg-gradient-to-b from-slate-900 to-transparent pt-4 pb-8">
+          <div className="container mx-auto px-6">
+            <div className="flex items-center justify-between">
+              <span className="text-slate-300 font-medium">
+                <span className="text-xl text-white">{currentSlide + 1}</span>
+                <span className="mx-2 text-slate-500">/</span>
+                <span className="text-lg">{slides.length}</span>
+              </span>
+              <h2 className="text-lg font-semibold text-white">
+                {slides[currentSlide].title}
+              </h2>
+            </div>
           </div>
-        ))}
+        </div>
       </div>
 
-      <footer className={`mt-16 text-center transform transition-all duration-1000 ${animate ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-        <div className="inline-block bg-slate-900/50 backdrop-blur rounded-xl p-6 border border-slate-800">
-          <h2 className="text-2xl font-bold text-[#fe8e68] mb-2">Investment Summary</h2>
-          <p className="text-slate-300">{calculateTotalETA(cards)}-day implementation • 300x ROI</p>
+      {/* Main content */}
+      <main className="flex-1 overflow-y-auto pt-20 pb-32">
+        <div className={`container mx-auto px-6 transition-all duration-500 ${
+          transitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+        }`}>
+          <CurrentSlideComponent />
         </div>
-      </footer>
+      </main>
+
+      {/* Footer navigation */}
+      <div className="fixed bottom-0 left-0 right-0 z-50">
+        <div className="bg-gradient-to-t from-slate-900 to-transparent pb-6 pt-12">
+          {/* Progress bar */}
+          <div className="container mx-auto px-6 mb-6">
+            <div className="h-1 bg-slate-700 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-orange-400 to-rose-400 transition-all duration-300"
+                style={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Controls */}
+          <div className="container mx-auto px-6">
+            <div className="flex justify-between items-center">
+              <button
+                onClick={() => handleSlideChange('prev')}
+                className="group p-3 hover:bg-white/10 rounded-full transition-all"
+                disabled={transitioning}
+              >
+                <ChevronLeft className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
+              </button>
+
+              <div className="flex gap-3">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => !transitioning && setCurrentSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${
+                      currentSlide === index 
+                        ? 'bg-gradient-to-r from-orange-400 to-rose-400' 
+                        : 'bg-slate-700 hover:bg-slate-600'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={() => handleSlideChange('next')}
+                className="group p-3 hover:bg-white/10 rounded-full transition-all"
+                disabled={transitioning}
+              >
+                <ChevronRight className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
   );
 };
 
-
-export default AIStorageDashboard;
+export default PresentationContainer;
