@@ -115,7 +115,7 @@ const AIStorageDashboard = () => {
       icon: MapPin,
       title: "Climate-Smart Storage Advisor",
       shortDescription: "Will reduce damage claims by 45%",
-      longDescription: "This system will minimize storage-related insurance claims and improve customer satisfaction through location-based storage recommendations. By analyzing local climate data and item characteristics, it will suggest optimal storage solutions that reduce damage risk. Market analysis indicates potential for 45% reduction in climate-related damage claims and 25% increase in premium storage unit sales. The system will include automated risk assessment and proactive customer notification features, leading to improved retention rates and reduced liability exposure.",
+      longDescription: "This system will improve storage recommendations by analyzing item characteristics and environmental factors. It suggests optimal storage solutions based on item type and location data. Analysis shows potential for 45% reduction in damage claims and 25% increase in premium unit sales. The system uses a rule-based matching algorithm to pair items with appropriate storage conditions.",
       features: [
         "Projected ROI: 45% reduction in damage claims",
         "Expected 25% increase in premium storage sales"
@@ -168,7 +168,7 @@ const AIStorageDashboard = () => {
       <footer className={`mt-16 text-center transform transition-all duration-1000 ${animate ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <div className="inline-block bg-slate-900/50 backdrop-blur rounded-xl p-6 border border-slate-800">
           <h2 className="text-2xl font-bold text-[#fe8e68] mb-2">Investment Summary</h2>
-          <p className="text-slate-300">{calculateTotalETA(cards)}-day implementation • 300x ROI in 90 days</p>
+          <p className="text-slate-300">{calculateTotalETA(cards)}-day implementation • 300x ROI</p>
         </div>
       </footer>
     </div>
